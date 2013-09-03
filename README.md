@@ -6,9 +6,9 @@ The simple way to automate tasks.
 
 ![Screenshot](images/screenshot.png)
 
-![Screenshot](images/screenshot-edit.png)
-
 ## Actions
+
+![Screenshot](images/screenshot-edit.png)
 
 ### Open
 
