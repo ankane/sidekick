@@ -2,7 +2,7 @@
 
 The simple way to automate tasks.
 
-[Download](https://chrome.google.com/webstore/detail/autokick/dmikmdobaidjjcifnjachfbaldokdhal)
+[Add to Google Chrome](https://chrome.google.com/webstore/detail/sidekick/dmikmdobaidjjcifnjachfbaldokdhal)
 
 ## Actions
 
@@ -31,5 +31,5 @@ Sidekick does not record **any** of this data.
 
 1. Clone the project
 2. Navigate to `chrome://extensions`
-3. Make sure "Developer Mode" is checked
-4. Click the "Load unpacked extension" button and select the project
+3. Make sure “Developer Mode” is checked
+4. Click the “Load unpacked extension” button and select the project
