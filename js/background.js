@@ -17,9 +17,9 @@ var app = (function () {
       // make sure it's a url we can access
       if (currentTab.url.substring(0, 4) === "http") {
         injected[currentTab.id] = true;
-        chrome.tabs.executeScript(currentTab.id, {file: "jquery-2.0.3.js"}, function () {
-          chrome.tabs.executeScript(currentTab.id, {file: "jquery.nearest.js"}, function () {
-            chrome.tabs.executeScript(currentTab.id, {file: "magic.js"}, function () {
+        chrome.tabs.executeScript(currentTab.id, {file: "js/jquery-2.0.3.js"}, function () {
+          chrome.tabs.executeScript(currentTab.id, {file: "js/jquery.nearest.js"}, function () {
+            chrome.tabs.executeScript(currentTab.id, {file: "js/magic.js"}, function () {
               callback();
             });
           });
