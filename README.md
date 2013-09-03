@@ -4,11 +4,13 @@ The simple way to automate tasks.
 
 [![Add to Google Chrome](images/store.png)](https://chrome.google.com/webstore/detail/sidekick/dmikmdobaidjjcifnjachfbaldokdhal)
 
+## How It Looks
+
 ![Screenshot](images/screenshot.png)
 
-## Actions
-
 ![Screenshot](images/screenshot-edit.png)
+
+## Actions
 
 ### Open
 
