@@ -2,7 +2,7 @@
 
 The simple way to automate tasks.
 
-[Add to Google Chrome](https://chrome.google.com/webstore/detail/sidekick/dmikmdobaidjjcifnjachfbaldokdhal)
+[![Add to Google Chrome](images/store.png)](https://chrome.google.com/webstore/detail/sidekick/dmikmdobaidjjcifnjachfbaldokdhal)
 
 ## Actions
 
