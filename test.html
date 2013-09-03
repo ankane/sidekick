@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-2.0.3.js"></script>
+  </head>
+  <body>
+    <h1>Enter</h1>
+    <input type="text" placeholder="First Name" />
+    <textarea name="ta1"></textarea>
+    <select name="s1">
+      <option value="74">Red</option>
+      <option value="75">Blue</option>
+      <option value="76">Green</option>
+    </select>
+
+    <h1>Click</h1>
+    <a href="#">I'm Feeling Lucky</a>
+
+    <script>
+      $("a").click( function(e) {
+        e.preventDefault();
+        $(this).css("color", "green");
+      });
+    </script>
+  </body>
+</html>

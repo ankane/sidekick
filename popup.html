@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app="myApp" ng-csp>
+  <head>
+    <meta charset="utf-8">
+    <script src="jquery-2.0.3.js"></script>
+    <script src="jquery-ui.js"></script>
+    <script src="angular.js"></script>
+    <script src="popup.js"></script>
+    <link rel="stylesheet" href="popup.css">
+  </head>
+  <body>
+    <div ng-controller="ActionCtrl">
+      <div ng-show="hasPermission">
+        <p ng-show="actions.length == 0">
+          Get started.  Add an action.
+        </p>
+        <ul id="actions" ng-class="{edit: editMode}">
+          <li ng-repeat="action in actions">
+            <div style="float: right;" ng-show="editMode">
+              <a href="#" ng-click="destroyAction(action)">×</a>
+            </div>
+            <span ng-class="{done: step != null && step > $index, working: step != null && step == $index && !errorMessage, error: step != null && step == $index && errorMessage}"><strong style="text-transform: capitalize;">{{action.type}}</strong> {{action.selector}} {{action.value && '“' + action.value + '”'}}</span>
+          </li>
+        </ul>
+        <div ng-show="editMode">
+          <form id="new-action" ng-submit="createAction()">
+            <input type="submit" value="Add" class="btn" ng-disabled="!actionSelector && !actionValue" style="float: right;">
+            <select id="action" ng-model="actionType">
+              <option value="click">Click</option>
+              <option value="enter">Enter</option>
+              <option value="open">Open</option>
+            </select>
+            <input type="text" ng-model="actionSelector" placeholder="{{actionType == 'click' && 'Button text or CSS selector' || (actionType == 'open' && 'Website URL' || 'Form field')}}" style="width: {{actionType == 'enter' && 116 || 240}}px;">
+            <input type="text" ng-model="actionValue" ng-show="actionType == 'enter'" placeholder="Value" style="width: 100px;">
+          </form>
+        </div>
+        <div ng-hide="actions.length == 0">
+          <hr>
+          <form ng-submit="run()">
+            <a href="#" ng-click="resetActions()" ng-hide="!editMode || actions.length == 0" style="float: right; margin-top: 9px;">Start Over</a>
+            <input type="submit" value="Run" class="btn" ng-disabled="running" style="margin-right: 10px;">
+            <a href="#" ng-hide="running" ng-click="toggleEditMode()">{{editMode && 'Done' || 'Edit'}}</a>
+          </form>
+        </div>
+        <p class="alert" ng-show="errorMessage">Error - {{errorMessage}}</p>
+      </div>
+      <div ng-show="!hasPermission">
+        <p style="font-weight: bold;">Sidekick needs permission to run</p>
+        <p>
+          We take your privacy very seriously.<br />
+          Sidekick does not track any of your activity.
+        </p>
+        <p>-  <a href="https://github.com/ankane" target="_blank">Andrew</a></p>
+        <p><a href="#" ng-click="requestPermissions()" class="btn">Give Permission</a></p>
+        <p class="muted">You only need to do this once</p>
+      </div>
+    </div>
+  </body>
+</html>

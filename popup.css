@@ -1,0 +1,109 @@
+html {
+  width: 420px;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.428571429;
+  color: #333;
+  margin: 0;
+  padding: 10px;
+}
+
+a {
+  color: #428bca;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #2a6496;
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+hr {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 0;
+  border-top: 1px solid #eeeeee;
+}
+
+input, select {
+  font-family: inherit;
+  margin: 0;
+}
+
+input[type=text], select {
+  padding: 6px 9px;
+  font-size: 14px;
+  line-height: 1.428571429;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+select {
+  display: inline-block;
+  height: 34px;
+  box-sizing: border-box;
+}
+
+#actions li {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+#actions.edit li {
+  cursor: move;
+}
+
+.done {
+  color: #4cae4c;
+}
+
+.working {
+  color: orange;
+}
+
+.muted {
+  color: #999;
+}
+
+.btn {
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: none;
+  display: inline-block;
+  font-size: 14px;
+  line-height: inherit;
+  outline: 0;
+  margin: 0;
+  border: solid 1px transparent;
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+}
+
+a.btn, a.btn:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: 0.65;
+}
+
+.error, .alert {
+  color: red;
+}
+
+.warning {
+  color: orange;
+}
