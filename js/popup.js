@@ -50,21 +50,23 @@
     };
 
     $scope.run = function (startStep, endStep) {
-      chrome.permissions.contains(permissions, function (granted) {
-        if (granted) {
-          $scope.hasPermission = true;
-          $scope.running = true;
-          $scope.editMode = false;
-          $scope.step = startStep;
-          $scope.completedSteps = [];
-          $scope.errorMessage = null;
-          $scope.$apply();
-          backgroundApp.run($scope.actions, startStep, endStep, $scope);
-        } else {
-          $scope.hasPermission = false;
-          $scope.$apply();
-        }
-      });
+      if (!backgroundApp.isRunning()) {
+        chrome.permissions.contains(permissions, function (granted) {
+          if (granted) {
+            $scope.hasPermission = true;
+            $scope.running = true;
+            $scope.editMode = false;
+            $scope.step = startStep;
+            $scope.completedSteps = [];
+            $scope.errorMessage = null;
+            $scope.$apply();
+            backgroundApp.run($scope.actions, startStep, endStep, $scope);
+          } else {
+            $scope.hasPermission = false;
+            $scope.$apply();
+          }
+        });
+      }
     };
 
     $scope.requestPermissions = function () {

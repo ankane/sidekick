@@ -106,5 +106,9 @@ var app = (function () {
     });
   };
 
+  pub.isRunning = function () {
+    return running;
+  };
+
   return pub;
 }());
