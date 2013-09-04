@@ -21,6 +21,7 @@
 
     $scope.errorMessage = null;
     $scope.step = null;
+    $scope.completedSteps = [];
     $scope.running = false;
     $scope.hasPermission = true;
     $scope.actionType = $scope.actionType || "click";
@@ -48,16 +49,17 @@
       origins: ["https://*/*", "http://*/*"]
     };
 
-    $scope.run = function () {
+    $scope.run = function (startStep, endStep) {
       chrome.permissions.contains(permissions, function (granted) {
         if (granted) {
           $scope.hasPermission = true;
           $scope.running = true;
           $scope.editMode = false;
-          $scope.step = 0;
+          $scope.step = startStep;
+          $scope.completedSteps = [];
           $scope.errorMessage = null;
           $scope.$apply();
-          backgroundApp.run($scope.actions, $scope);
+          backgroundApp.run($scope.actions, startStep, endStep, $scope);
         } else {
           $scope.hasPermission = false;
           $scope.$apply();
@@ -119,6 +121,11 @@
     $scope.showError = function (message) {
       $scope.errorMessage = message;
       $scope.running = false;
+      $scope.$apply();
+    };
+
+    $scope.completedStep = function (step) {
+      $scope.completedSteps.push(step);
       $scope.$apply();
     };
 

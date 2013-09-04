@@ -10,7 +10,9 @@ var app = (function () {
     injected = {},
     currentTab,
     $scope,
-    step;
+    step,
+    endStep,
+    previousStep;
 
   function injectCode(callback) {
     if (!injected[currentTab.id]) {
@@ -49,8 +51,10 @@ var app = (function () {
 
   function nextStep() {
     var action, url;
-
-    if (step < queue.length) {
+    if (previousStep !== null) {
+      $scope.completedStep(previousStep);
+    }
+    if (step < endStep) {
       $scope.nextStep(step);
       action = queue[step];
       if (action.type === "open") {
@@ -62,6 +66,7 @@ var app = (function () {
       } else {
         sendMessage(action, nextStep);
       }
+      previousStep = step;
       step++;
     } else {
       running = false;
@@ -80,13 +85,15 @@ var app = (function () {
     }
   });
 
-  pub.run = function (actions, scope) {
+  pub.run = function (actions, startStep, runEndStep, scope) {
     $scope = scope;
     chrome.tabs.getSelected(null, function (tab) {
       currentTab = tab;
       running = true;
       queue = actions;
-      step = 0;
+      step = startStep;
+      endStep = runEndStep;
+      previousStep = null;
       nextStep();
     });
   };
