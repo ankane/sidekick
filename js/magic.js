@@ -67,12 +67,9 @@
         }).get(0);
       }
       if (!ele) {
-        e = $("*").filter(function () {
-          return $(this).text().toUpperCase().indexOf(selector.toUpperCase()) >= 0;
-        });
-        if (e.length > 0) {
-          ele = e.nearest("input[type=text]:visible").get(0);
-        }
+        ele = $("input[name]").filter(function () {
+          return $(this).attr("name") === selector;
+        }).get(0);
       }
       return ele;
     };

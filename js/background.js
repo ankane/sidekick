@@ -20,10 +20,8 @@ var app = (function () {
       if (currentTab.url.substring(0, 4) === "http") {
         injected[currentTab.id] = true;
         chrome.tabs.executeScript(currentTab.id, {file: "js/jquery-2.0.3.js"}, function () {
-          chrome.tabs.executeScript(currentTab.id, {file: "js/jquery.nearest.js"}, function () {
-            chrome.tabs.executeScript(currentTab.id, {file: "js/magic.js"}, function () {
-              callback();
-            });
+          chrome.tabs.executeScript(currentTab.id, {file: "js/magic.js"}, function () {
+            callback();
           });
         });
       } else {
