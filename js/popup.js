@@ -10,20 +10,22 @@
   myApp = angular.module("myApp", []);
 
   myApp.controller("ActionCtrl", ["$scope", function ($scope, $timeout) {
-    var backgroundApp, permissions, startIndex;
+    var backgroundApp, permissions, startIndex, persist;
 
     backgroundApp = chrome.extension.getBackgroundPage().app;
 
-    $scope.actions = [];
-    $scope.actionType = "click";
+    persist = ["actions", "actionType", "actionSelector", "actionValue", "editMode"];
+    angular.forEach(persist, function (value, key) {
+      $scope[value] = JSON.parse(localStorage.getItem(value));
+    });
+
     $scope.errorMessage = null;
     $scope.step = null;
     $scope.running = false;
     $scope.hasPermission = true;
+    $scope.actionType = $scope.actionType || "click";
 
-    if (localStorage.getItem("actions")) {
-      $scope.actions = JSON.parse(localStorage.getItem("actions"));
-    } else {
+    if (!localStorage.getItem("actions")) {
       $scope.actions = [
         {type: "open", selector: "google.com"},
         {type: "enter", selector: "Google Search", value: "get lucky youtube"},
@@ -40,8 +42,6 @@
         {type: "click", selector: "I'm Feeling Lucky"}
       ];
     }
-
-    $scope.editMode = $scope.actions.length === 0;
 
     permissions = {
       permissions: ["activeTab", "tabs"],
@@ -70,32 +70,34 @@
       backgroundApp.requestPermissions(permissions, $scope.actions, $scope);
     };
 
+    $("#actions").sortable({
+      start: function (e, ui) {
+        startIndex = $(ui.item).index();
+      },
+      stop: function (e, ui) {
+        var newIndex, toMove;
+
+        newIndex = $(ui.item).index();
+        toMove = $scope.actions[startIndex];
+
+        $scope.actions.splice(startIndex, 1);
+        $scope.actions.splice(newIndex, 0, toMove);
+
+        $scope.$apply($scope.actions);
+      }
+    });
+
     $scope.toggleEditMode = function () {
       $scope.step = null;
       $scope.errorMessage = null;
       $scope.editMode = !$scope.editMode;
       if ($scope.editMode) {
-        $("#actions").sortable({
-          start: function (e, ui) {
-            startIndex = $(ui.item).index();
-          },
-          stop: function (e, ui) {
-            var newIndex, toMove;
-
-            newIndex = $(ui.item).index();
-            toMove = $scope.actions[startIndex];
-
-            $scope.actions.splice(startIndex, 1);
-            $scope.actions.splice(newIndex, 0, toMove);
-
-            $scope.$apply($scope.actions);
-          }
-        });
         $timeout(function () {
           $("#new-action").find("input:visible:eq(0)").focus();
         }, 10);
       } else {
-        $("#actions").sortable("destroy");
+        $scope.actionSelector = null;
+        $scope.actionValue = null;
       }
     };
 
@@ -132,9 +134,11 @@
     };
 
     // persist actions
-    $scope.$watch("actions", function () {
-      localStorage.setItem("actions", JSON.stringify($scope.actions));
-    }, true);
+    angular.forEach(persist, function (value, key) {
+      $scope.$watch(value, function () {
+        localStorage.setItem(value, JSON.stringify($scope[value]));
+      }, true);
+    });
 
   }]); // end controller
 

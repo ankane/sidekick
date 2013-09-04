@@ -16,13 +16,13 @@
         </p>
         <ul id="actions" ng-class="{edit: editMode}">
           <li ng-repeat="action in actions">
-            <div style="float: right;" ng-show="editMode">
-              <a href="#" ng-click="destroyAction(action)">×</a>
+            <div class="delete" style="float: right;">
+              <a href="#" ng-click="destroyAction(action)">Delete</a>
             </div>
-            <span ng-class="{done: step != null && step > $index, working: step != null && step == $index && !errorMessage, error: step != null && step == $index && errorMessage}"><strong style="text-transform: capitalize;">{{action.type}}</strong> {{action.selector}} {{action.value && '“' + action.value + '”'}}</span>
+            <span style="cursor: text;" ng-class="{done: step != null && step > $index, working: step != null && step == $index && !errorMessage, error: step != null && step == $index && errorMessage}"><strong style="text-transform: capitalize;">{{action.type}}</strong> {{action.selector}} {{action.value && '“' + action.value + '”'}}</span>
           </li>
         </ul>
-        <div ng-show="editMode">
+        <div ng-show="editMode || actions.length == 0">
           <form id="new-action" ng-submit="createAction()">
             <input type="submit" value="Add" class="btn" ng-disabled="!actionSelector && !actionValue" style="float: right;">
             <select id="action" ng-model="actionType">
@@ -37,9 +37,9 @@
         <div ng-hide="actions.length == 0">
           <hr>
           <form ng-submit="run()">
-            <a href="#" ng-click="resetActions()" ng-hide="!editMode || actions.length == 0" style="float: right; margin-top: 9px;">Start Over</a>
+            <a href="#" ng-click="resetActions()" ng-hide="running || actions.length == 0" style="float: right; margin-top: 9px;">Start Over</a>
             <input type="submit" value="Run" class="btn" ng-disabled="running" style="margin-right: 10px;">
-            <a href="#" ng-hide="running" ng-click="toggleEditMode()">{{editMode && 'Done' || 'Edit'}}</a>
+            <a href="#" ng-hide="running" ng-click="toggleEditMode()">{{editMode && 'Done' || 'Add Action'}}</a>
           </form>
         </div>
         <p class="alert" ng-show="errorMessage">Error - {{errorMessage}}</p>
